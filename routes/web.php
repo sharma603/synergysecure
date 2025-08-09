@@ -114,6 +114,6 @@ Route::get('/', function () {
     }
 });
 
-// update 2
+// update 3
 
 Log::debug('Login attempt', ['guard_web' => Auth::guard('web')->check(), 'guard_register' => Auth::guard('register')->check()]);
