@@ -7,8 +7,8 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h4 class="card-title">Create New Sub-User</h4>
-                    <a href="{{ route('roles.index') }}" class="btn btn-secondary">
-                        <i class="mdi mdi-arrow-left"></i> Back to Roles
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">
+                        <i class="mdi mdi-arrow-left"></i> Back
                     </a>
                 </div>
 

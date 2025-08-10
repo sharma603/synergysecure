@@ -25,9 +25,9 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        // If already logged in, redirect to dashboard
+        // If already logged in, redirect to add-company
         if (Auth::check() || Auth::guard('register')->check()) {
-            return redirect()->route('dashboard');
+            return redirect()->route('add-company');
         }
         
         return view('auth.login');
@@ -65,8 +65,8 @@ class LoginController extends Controller
             Log::info('Register login successful', ['email' => $request->email]);
             
             return $request->ajax()
-                ? response()->json(['success' => true, 'redirect' => route('dashboard')])
-                : redirect()->intended(route('dashboard'));
+                ? response()->json(['success' => true, 'redirect' => route('add-company')])
+                : redirect()->intended(route('add-company'));
         }
         
         // If that fails, try with standard User model
@@ -76,8 +76,8 @@ class LoginController extends Controller
             Log::info('User login successful', ['email' => $request->email]);
             
             return $request->ajax()
-                ? response()->json(['success' => true, 'redirect' => route('dashboard')])
-                : redirect()->intended(route('dashboard'));
+                ? response()->json(['success' => true, 'redirect' => route('add-company')])
+                : redirect()->intended(route('add-company'));
         }
 
         // Authentication failed - log the failure

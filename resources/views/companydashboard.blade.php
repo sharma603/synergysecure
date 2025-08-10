@@ -2,6 +2,18 @@
 
 @section('contents')
 <style>
+    /* Company dashboard polish */
+    .card.shadow-soft { box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+    .card-header {
+        background: linear-gradient(180deg, #252935 0%, #1b1e27 100%);
+        border-bottom: 1px solid #2c2e33;
+    }
+    .card-header h4, .card-header h5 { color: #e9ecef; }
+    .card-body { background: #191c24; }
+    .card-body .card-title { color: #ffffff; }
+    .card.border-primary { border-color: rgba(0,144,231,.35) !important; }
+    .badge.bg-info { background-color: #6f42c1 !important; }
+
     /* Custom styles for notes visibility */
     .note-fields {
         font-size: 1rem;
@@ -132,11 +144,18 @@
             margin-bottom: 1rem;
         }
     }
+
+    @media (max-width: 576px) {
+        .card-header .btn { padding: .35rem .6rem; font-size: .85rem; }
+        .card-header h4, .card-header h5 { font-size: 1.05rem; }
+        .accordion-button { padding: .5rem .75rem; }
+        .note-content { max-height: 160px !important; }
+    }
 </style>
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <div class="card">
+            <div class="card shadow-soft">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h4 class="mb-0">Company Details</h4>
                     <div>
@@ -160,7 +179,7 @@
 
     <div class="row mt-4">
         <div class="col-md-8 offset-md-2">
-            <div class="card">
+            <div class="card shadow-soft">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Notes ({{ $notes->count() }})</h5>
                     @if($notes->count())
@@ -263,7 +282,15 @@
                             @endphp
                         </div>
                     @else
-                        <div class="alert alert-warning">No notes found for this company.</div>
+                        <div class="alert alert-dark border-0" style="background: #222633; color: #bfc5d2;">
+                            <div class="d-flex align-items-center">
+                                <i class="mdi mdi-note-outline me-2 fs-4 text-info"></i>
+                                <div>
+                                    <div class="fw-semibold">No notes found for this company.</div>
+                                    <div class="small text-muted">Click "Add Note" to create the first note.</div>
+                                </div>
+                            </div>
+                        </div>
                     @endif
                 </div>
             </div>

@@ -27,9 +27,9 @@ class UserLoginController extends Controller
      */
     public function showLoginForm(Request $request)
     {
-        // Direct check - if already logged in with either guard, redirect to dashboard
+        // Direct check - if already logged in with either guard, redirect to add-company
         if (Auth::guard('register')->check() || Auth::guard('web')->check()) {
-            return redirect()->route('dashboard');
+            return redirect()->route('add-company');
         }
         
         // Not logged in, show login form
@@ -46,8 +46,8 @@ class UserLoginController extends Controller
     {
         // Check if already logged in
         if (Auth::guard('register')->check() || Auth::guard('web')->check()) {
-            Log::info('User already logged in, redirecting to dashboard');
-            return redirect()->route('dashboard');
+            Log::info('User already logged in, redirecting to add-company');
+            return redirect()->route('add-company');
         }
         
         $validator = Validator::make($request->all(), [
