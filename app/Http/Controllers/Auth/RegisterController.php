@@ -57,8 +57,8 @@ class RegisterController extends Controller
         // Log the user in
         Auth::login($user);
 
-        // Redirect to dashboard
-        return redirect()->route('dashboard')
+        // Redirect to add-company
+        return redirect()->route('add-company')
             ->with('success', 'Registration successful! Welcome to CompanySecure.');
     }
 } 

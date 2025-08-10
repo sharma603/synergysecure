@@ -22,7 +22,7 @@ class RoleController extends Controller
         // Instead of using hasRole, check if the user has any admin roles by name
         // This avoids the linter error while maintaining functionality
         if ($user && $user->roles && !$user->roles->contains('name', 'admin')) {
-            return redirect()->route('dashboard')
+            return redirect()->route('add-company')
                 ->with('error', 'You do not have permission to access the Roles management.');
         }
         

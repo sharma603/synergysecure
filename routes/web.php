@@ -3,7 +3,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
@@ -16,28 +15,15 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\SubUserController;
 
 // Guest routes (for non-authenticated users)
-// Remove 'guest' middleware to allow direct access
-// Route::middleware(['guest'])->group(function () {
-//      // Login routes - keep both for compatibility
-//     Route::get('/login', [UserLoginController::class, 'showLoginForm'])->name('login');
-//     Route::post('/login', [UserLoginController::class, 'login'])->name('login.submit');
-//     
-//     // Registration routes
-//     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-//     Route::post('/register', [RegisterController::class, 'register']);
-// });
 
 // Login routes only (register disabled)
 Route::get('/login', [UserLoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserLoginController::class, 'login'])->name('login.submit');
 // Registration routes are disabled
-// Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-// Route::post('/register', [RegisterController::class, 'register']);
 
-// Protected routes (for authenticated users)
-Route::middleware(['auth'])->group(function () {
-    // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// Protected routes (supports both 'web' and 'register' guards)
+Route::middleware(['auth:web,register'])->group(function () {
+    // Dashboard removed
 
     // Company routes
     Route::get('/add-company', function () {
@@ -100,20 +86,13 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy')->middleware('role:admin');
 });
 
-// Test route - should show the same view without controller
-Route::get('/test-sub-user', function () {
-    return view('roles.create_sub_user');
-})->name('test.sub.user');
+//
 
-// Redirect root to login or dashboard based on auth status
+// Redirect root to login or add-company based on auth status
 Route::get('/', function () {
     if (Auth::guard('register')->check() || Auth::guard('web')->check()) {
-        return redirect()->route('dashboard');
+        return redirect()->route('add-company');
     } else {
         return redirect()->route('login');
     }
 });
-
-// update 123
-
-Log::debug('Login attempt', ['guard_web' => Auth::guard('web')->check(), 'guard_register' => Auth::guard('register')->check()]);
